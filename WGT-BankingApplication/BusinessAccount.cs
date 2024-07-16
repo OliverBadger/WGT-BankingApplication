@@ -2,7 +2,12 @@
 
 class BusinessAccount : Account
 {
+    private decimal _overdraftAmount;
     public BusinessAccount() { }
+
+    public void RequestNewCard() { }  // Probably going to have to create classes for cards, cheque books and maybe an interface for loan?
+    public void RequestNewChequeBook() { }
+    public void RequestLoan() { }
 
     public override void OpenAccount()
     {
