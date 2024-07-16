@@ -2,13 +2,27 @@
 
 class ISA : Account
 {
-    public override void Deposit(double amount)
+    public ISA() { }
+
+    public override void OpenAccount()
     {
         throw new NotImplementedException();
     }
 
-    public override void Withdraw(double amount)
+    public override void CloseAccount()
     {
         throw new NotImplementedException();
     }
+
+    public override void Deposit(decimal amount)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Withdraw(decimal amount)
+    {
+        throw new NotImplementedException();
+    }
+
+
 }
