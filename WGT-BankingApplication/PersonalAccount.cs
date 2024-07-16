@@ -2,7 +2,15 @@
 
 class PersonalAccount : Account
 {
+    private List<DirectDebit> _directDebit;
+    private List<StandingOrder> _standingOrder;
+
     public PersonalAccount() { }
+
+    public void CreateDirectDebit() { }
+    public void RemoveDirectDebit() { }
+    public void CreateStandingOrder() { }
+    public void RemoveStandingOrder() { }
 
     public override void OpenAccount()
     {

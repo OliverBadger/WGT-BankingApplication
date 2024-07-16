@@ -2,7 +2,11 @@
 
 class ISA : Account
 {
+    private decimal APR = 2.75m;
+
     public ISA() { }
+
+    public void AccumulateInterest() { }
 
     public override void OpenAccount()
     {
