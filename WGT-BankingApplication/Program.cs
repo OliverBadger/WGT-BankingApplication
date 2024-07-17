@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using System;
+using System.Formats.Tar;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -11,7 +12,7 @@ class MyClass{
     public static void Main()
     {
         initUsers();
-        
+        UserCredentials.initUserCredentials();
         //Console.WriteLine("This is a Banking Application!");
         //Console.WriteLine("This is just to test the branches");
         
@@ -63,17 +64,10 @@ class MyClass{
 
     //do while for login if credentials are valid escape do while call next method outside of do while block
 
-    //Temp will store in JSON
-    static Dictionary<string, string> employeeCredentials = new Dictionary<string, string>();
 
     //We can move login methods and customer searching methods to dedicated classes for clarity and to keep this class consice
     private static void login()
     {
-        //this is temp will make teller json for stoing teller credentials
-        employeeCredentials.Add("admin", "password");
-
-        //get username
-
         string username = "";
 
         bool CorrectUsernameProvided = false;
@@ -81,6 +75,12 @@ class MyClass{
         do
         {
             Console.Clear();
+            //encryption testing (should make unit test for this)
+            //string test = Encryption.encryptString("poapsdopasodasf");
+            //string test2 = Encryption.Decode(test);
+            //Console.WriteLine(test);
+            //Console.WriteLine(test2);
+
             Console.Write("Please Enter Employee Id: ");
             string? employeeUserName = Console.ReadLine();
             if (isUserNameValid(employeeUserName))
@@ -109,7 +109,7 @@ class MyClass{
     }
     private static bool isUserNameValid(string username)
     {
-        if (employeeCredentials.ContainsKey(username))
+        if (UserCredentials.employeeCredentials.ContainsKey(Encryption.encryptString(username)))
         {
             return true;
         }
@@ -118,7 +118,7 @@ class MyClass{
 
     private static bool isPasswordValid(string username, string password)
     {
-        if (employeeCredentials[username] == password)
+        if (Encryption.Decode(UserCredentials.employeeCredentials[Encryption.encryptString(username)]) == password)
         {
             return true;
         }
