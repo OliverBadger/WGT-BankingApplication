@@ -24,12 +24,14 @@ namespace WGT_BankingApplication
     //TOD create additional user info
 
     //TODO add user data encryptyion 
-    struct userStruct(uint _customerID,string _firstName,string _secondName)
-    {
-        public uint CustomerID = _customerID;
-        public string FirstName = _firstName;
-        public string SecondName = _secondName;
-    }
+    
+    //Depracated -> used for testing before integrating with customer class 
+    //struct userStruct(uint _customerID,string _firstName,string _secondName)
+    //{
+    //    public uint CustomerID = _customerID;
+    //    public string FirstName = _firstName;
+    //    public string SecondName = _secondName;
+    //}
     
     
     class CustomerGenerator
@@ -39,7 +41,7 @@ namespace WGT_BankingApplication
         static string userDetails = "Users.JSON";
 
         const int NUMBER_OF_USERS = 10;
-        static userStruct[] userList = new userStruct[NUMBER_OF_USERS];
+        static Customer[] userList = new Customer[NUMBER_OF_USERS];
 
 
         static string[] FirstNames = { "Trevor" , "Susan" , "Dave" , "Lucy" , "Vincent" , "Ria" , "Efosa" , "Kushi" , "Kenneth"};
@@ -56,8 +58,8 @@ namespace WGT_BankingApplication
             Random randomPick = new Random();
             for (int i=0; i < NUMBER_OF_USERS; i++)
             {
-                userList[i] = new userStruct((uint)i, FirstNames[randomPick.Next(1, FirstNames.Length)],
-                    SecondNames[randomPick.Next(1, SecondNames.Length)]);
+                userList[i] = new Customer(i, FirstNames[randomPick.Next(1, FirstNames.Length)],
+                    SecondNames[randomPick.Next(1, SecondNames.Length)], "password");
             }
             string json = JsonConvert.SerializeObject(userList, Formatting.Indented);
             File.WriteAllText("Users.json", json);
