@@ -3,7 +3,8 @@
 class Customer
 {
     private int _id;
-    private string _name;
+    private string _firstName;
+    private string _surname;
     private string _password;
     private ISA isa;
     private List<PersonalAccount> _personalAccounts;
@@ -11,16 +12,18 @@ class Customer
     private List<Account> _accounts;
 
     public int ID { get { return _id; } }
-    public string Name { get { return _name; } }
-    private string Password { get { return _password; } set { _password = value; } }
+    public string FirstName { get { return _firstName; } }
+    public string Surname { get { return _surname; } }
+    public string Password { get { return _password; } set { _password = value; } } //Changed to public so its serialized - will encrypt
     public List<Account> Account_List { get { return _accounts; } }
     public List<PersonalAccount> PersonalAccount_List { get { return _personalAccounts; } }
     public List<BusinessAccount> BusinessAccount_List { get { return _businessAccounts; } }
 
-    public Customer(int id, string name, string password)  // Initial testing need to improve 
+    public Customer(int id, string firstname, string surname , string password)  // Initial testing need to improve 
     {
         _id = id;
-        _name = name;
+        _firstName = firstname;
+        _surname = surname;
         _password = password;
         _accounts = new List<Account>();
     }
