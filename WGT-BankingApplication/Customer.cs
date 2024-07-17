@@ -15,6 +15,7 @@ class Customer
     public string FirstName { get { return _firstName; } }
     public string Surname { get { return _surname; } }
     public string Password { get { return _password; } set { _password = value; } } //Changed to public so its serialized - will encrypt
+    public ISA Isa { get { return isa; } }
     public List<Account> Account_List { get { return _accounts; } }
     public List<PersonalAccount> PersonalAccount_List { get { return _personalAccounts; } }
     public List<BusinessAccount> BusinessAccount_List { get { return _businessAccounts; } }
