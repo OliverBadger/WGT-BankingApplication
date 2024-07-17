@@ -5,7 +5,11 @@ class PersonalAccount : Account
     private List<DirectDebit> _directDebit;
     private List<StandingOrder> _standingOrder;
 
-    public PersonalAccount() { }
+    public PersonalAccount()
+    {
+        _directDebits = new List<DirectDebit>();
+
+    }
 
     public void CreateDirectDebit() { }
     public void RemoveDirectDebit() { }
