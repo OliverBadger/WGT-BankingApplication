@@ -11,16 +11,30 @@ class MyClass{
     public static void Main()
     {
         initUsers();
+        
         //Console.WriteLine("This is a Banking Application!");
         //Console.WriteLine("This is just to test the branches");
+        
+        Customer c1 = new Customer(1, "Bob","Beltch" , "test1234");
+        Customer c2 = new Customer(1, "Bob","Dylan" , "test2234");
+        Customer c3 = new Customer(1, "Bob","Marley" , "test3234");
+        Customer c4 = new Customer(1, "Bob","Ross" , "test4234");
+        
+        ISA savAcc1 = new ISA(c1, 1);
+        c1.AddAccount(savAcc1);
 
-        Customer c1 = new Customer(1, "Bob","smith" , "test3245");
-        Console.WriteLine(c1.FirstName);
-        Console.WriteLine(c1.ID);
-        Console.WriteLine(c1.Account_List);
-        //Console.WriteLine(c1.GetAccounts);
+        ISA savAcc2 = new ISA(c1, 1);
+        ISA savAcc3 = new ISA(c1, 1);
+        ISA savAcc4 = new ISA(c1, 1);
         
         PersonalAccount p1 = new PersonalAccount();
+        c1.AddAccount(p1);
+
+        //Console.WriteLine(c1.FirstName);
+        //Console.WriteLine(c1.ID);
+        //Console.WriteLine(c1.Account_List);
+        //Console.WriteLine(c1.GetAccounts);
+        
         Console.WriteLine($"Welcome back {c1.FirstName}, your account number is: {p1.AccountNumber}");
         Console.WriteLine($"Your current balance is: {p1.Balance}");
         
