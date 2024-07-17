@@ -24,8 +24,9 @@ namespace WGT_BankingApplication
     //TOD create additional user info
 
     //TODO add user data encryptyion 
-    struct userStruct(string _firstName,string _secondName)
+    struct userStruct(uint _customerID,string _firstName,string _secondName)
     {
+        public uint CustomerID = _customerID;
         public string FirstName = _firstName;
         public string SecondName = _secondName;
     }
@@ -55,18 +56,14 @@ namespace WGT_BankingApplication
             Random randomPick = new Random();
             for (int i=0; i < NUMBER_OF_USERS; i++)
             {
-                userList[i] = new userStruct(FirstNames[randomPick.Next(1, FirstNames.Length)],
+                userList[i] = new userStruct((uint)i, FirstNames[randomPick.Next(1, FirstNames.Length)],
                     SecondNames[randomPick.Next(1, SecondNames.Length)]);
-                Console.WriteLine(userList[i].FirstName);
-                
-
             }
             string json = JsonConvert.SerializeObject(userList, Formatting.Indented);
             File.WriteAllText("Users.json", json);
             Console.WriteLine("users prented");
 
-            
-            randomPick.Next(1, 13);
+         
         }
 
 
