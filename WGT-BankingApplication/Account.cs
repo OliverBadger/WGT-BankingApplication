@@ -6,7 +6,7 @@ abstract class Account
     private decimal _balance = 0.00m;
 
     public string AccountNumber { get { return _accountNumber; } }
-    public decimal Balance { get { return _balance; } }
+    public decimal Balance { get { return _balance; } }  // Potentially should be set to virtual so we can override with separate account constructors
 
     public Account()
     {
