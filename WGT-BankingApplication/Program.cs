@@ -1,6 +1,8 @@
 ﻿
 using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 
 namespace WGT_BankingApplication;
@@ -21,7 +23,8 @@ class MyClass{
         PersonalAccount p1 = new PersonalAccount();
         Console.WriteLine($"Welcome back {c1.FirstName}, your account number is: {p1.AccountNumber}");
         Console.WriteLine($"Your current balance is: {p1.Balance}");
-
+        
+        login();
         InputLoop();
     }
 
@@ -39,9 +42,77 @@ class MyClass{
         {
             //generate new users 
             CustomerGenerator.GenerateNewUserData();
+            //generate new accounts => 
         }
     }
 
+
+    //do while for login if credentials are valid escape do while call next method outside of do while block
+
+    //Temp will store in JSON
+    static Dictionary<string, string> employeeCredentials = new Dictionary<string, string>();
+
+    //We can move login methods and customer searching methods to dedicated classes for clarity and to keep this class consice
+    private static void login()
+    {
+        //this is temp will make teller json for stoing teller credentials
+        employeeCredentials.Add("admin", "password");
+
+        //get username
+
+        string username = "";
+
+        bool CorrectUsernameProvided = false;
+
+        do
+        {
+            Console.Clear();
+            Console.Write("Please Enter Employee Id: ");
+            string? employeeUserName = Console.ReadLine();
+            if (isUserNameValid(employeeUserName))
+            {
+                CorrectUsernameProvided = true;
+                username = employeeUserName;
+            }
+                
+
+        } while (!CorrectUsernameProvided);
+
+        //get password
+
+        bool CorrectPasswordProvided = false;
+
+        do
+        {
+            Console.Clear();
+            Console.Write("Please Enter Password: ");
+            string? employeePassword = Console.ReadLine();
+            if (isPasswordValid(username, employeePassword))
+                CorrectPasswordProvided = true;
+
+        } while (!CorrectPasswordProvided);
+
+    }
+    private static bool isUserNameValid(string username)
+    {
+        if (employeeCredentials.ContainsKey(username))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static bool isPasswordValid(string username, string password)
+    {
+        if (employeeCredentials[username] == password)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    //Only called after teller has succesfully logged in and credentials match
     private static void InputLoop()
     {
         Console.Clear();
