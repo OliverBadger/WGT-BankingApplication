@@ -7,6 +7,7 @@ class DirectDebit : PersonalAccount
 	private DateTime _date;
 	private string _reference;
 
+
 	public DirectDebit(string Payee, decimal Amount, DateTime Date, string Reference)
 	{
 		_payee = Payee;
@@ -14,4 +15,6 @@ class DirectDebit : PersonalAccount
 		_date = Date;
 		_reference = Reference;
 	}
+
+    public string Reference { get => _reference; set => _reference = value; }  // Added to keep the code working
 }

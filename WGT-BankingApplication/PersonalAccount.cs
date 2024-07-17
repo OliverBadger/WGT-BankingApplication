@@ -7,7 +7,7 @@ class PersonalAccount : Account
 
     public PersonalAccount()
     {
-        _directDebits = new List<DirectDebit>(); //stores direct debits linked to a personal account
+        _directDebit = new List<DirectDebit>(); //stores direct debits linked to a personal account
         _standingOrder = new List<StandingOrder>(); //stores standing orders linked to a personal account
 
     }
@@ -19,11 +19,11 @@ class PersonalAccount : Account
     }
     public void RemoveDirectDebit(string reference)
     {
-        for (int i = 0; i < directDebits.Count; i++) //loop through each direct debit in the list
+        for (int i = 0; i < _directDebit.Count; i++) //loop through each direct debit in the list
         {
-            if (_directDebits[i].Reference == reference) //check the current direct debit's refernece matches the given reference
+            if (_directDebit[i].Reference == reference) //check the current direct debit's refernece matches the given reference
             {
-                _directDebits.RemoveAt(i); //if it matches, remove the direct debit from the list at the current index
+                _directDebit.RemoveAt(i); //if it matches, remove the direct debit from the list at the current index
                 break; //stop loop as direct debit has been removed
             }
         }
@@ -33,13 +33,13 @@ class PersonalAccount : Account
         StandingOrder newStandingOrder = new StandingOrder(payee, amount, date, reference);
         _standingOrder.Add(newStandingOrder);
     }
-    public void RemoveStandingOrder(string reference)
+    public void RemoveStandingOrder(string reference) { 
     
-        for (int i = 0; i < _standingOrders.Count; i++) //loop through each standing orders in the list
+        for (int i = 0; i < _standingOrder.Count; i++) //loop through each standing orders in the list
         {
-           if (_standingOrders[i].Reference == reference) //check the current stnading order referece matches the given reference
+           if (_standingOrder[i].Reference == reference) //check the current stnading order referece matches the given reference
             {
-                _standingOrders.RemoveAt(i); //if it matches, remove from the list at the current index
+                _standingOrder.RemoveAt(i); //if it matches, remove from the list at the current index
                 break; //stop loop as standing order has been removed
             }  
         }

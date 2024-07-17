@@ -14,4 +14,6 @@ class StandingOrder : PersonalAccount
         _date = Date;
         _reference = Reference;
     }
+
+    public string Reference { get => _reference; set => _reference = value; }  // Added to keep the code working
 }
