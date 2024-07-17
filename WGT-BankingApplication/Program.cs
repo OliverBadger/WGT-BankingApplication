@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using System;
+using System.Formats.Tar;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -55,6 +56,13 @@ class MyClass{
     //We can move login methods and customer searching methods to dedicated classes for clarity and to keep this class consice
     private static void login()
     {
+
+
+        
+        
+
+
+
         //this is temp will make teller json for stoing teller credentials
         employeeCredentials.Add("admin", "password");
 
@@ -67,6 +75,12 @@ class MyClass{
         do
         {
             Console.Clear();
+            //encryption testing (should make unit test for this)
+            //string test = Encryption.encryptString("poapsdopasodasf");
+            //string test2 = Encryption.Decode(test);
+            //Console.WriteLine(test);
+            //Console.WriteLine(test2);
+
             Console.Write("Please Enter Employee Id: ");
             string? employeeUserName = Console.ReadLine();
             if (isUserNameValid(employeeUserName))
