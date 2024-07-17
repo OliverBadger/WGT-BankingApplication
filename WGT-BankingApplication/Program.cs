@@ -1,4 +1,5 @@
-﻿namespace WGT_BankingApplication;
+﻿
+namespace WGT_BankingApplication;
 
 class MyClass{
     public static void Main()
