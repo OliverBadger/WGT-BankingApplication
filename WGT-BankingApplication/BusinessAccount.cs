@@ -2,36 +2,43 @@
 
 class BusinessAccount : Account
 {
+    private string _typeOfBusiness;
+    private string _nameOfBusiness;
+    private string _businessAddress;
     private bool _isActive;
-    private bool _hasRequestedChequeBook; 
-    private decimal _balance;  // Might need to remove in the future to use from Account class
-    private decimal _overdraftAmount;
+    private bool _hasRequestedChequeBook;
+    private decimal _overdraftAmount = 0;
     private DateTime _createdDate;
-    private DateTime _lastAnnualChargeDate;
+    private DateTime _lastAnnualChargeDate = default;
     private List<Loan> _loans;
     private Customer _accountHolder;
     private ChequeBook? _chequeBook;  // Lazy implementation, potentially going to split up into cheque class and make a chequebook a list of cheques?
 
+    public string NameOfBusiness { get => _nameOfBusiness; set => _nameOfBusiness = value; }
+    public string BusinessAddress { get => _businessAddress; set => _businessAddress = value; }
+    public string TypeOfBusiness { get => _typeOfBusiness; set => _typeOfBusiness = value; }
     public bool IsActive { get => _isActive; private set => _isActive = value; }
     public bool HasRequestedChequeBook { get => _hasRequestedChequeBook; private set => _hasRequestedChequeBook = value; }
-    public decimal Balance { get => _balance; private set => _balance = value; }  // Need to add override to allow BusinessAccount class to set values
-    public decimal OverdraftAmount { get => _overdraftAmount; set => _overdraftAmount = value; }
+    // public decimal OverdraftAmount { get => _overdraftAmount; set => _overdraftAmount = value; }
     public DateTime CreatedDate { get => _createdDate; }
     public DateTime LastAnnualChargeDate { get => _lastAnnualChargeDate; private set => _lastAnnualChargeDate = value; }
     public List<Loan> Loans { get => _loans; }
     internal Customer AccountHolder { get => _accountHolder; }
     internal ChequeBook? ChequeBook { get => _chequeBook; private set => _chequeBook = value;  }
 
-    public BusinessAccount(Customer Customer, decimal InitialDeposit) : base()
+    public BusinessAccount(Customer Customer, string NameOfBusiness, string TypeOfBusiness, string BusinessAddress, decimal InitialDeposit, DateTime CreatedDate = default, DateTime LastAnnualChargeDate = default) : base(Customer.ID, Customer.FirstName, Customer.Surname, Customer.Password)
     {
         _accountHolder = Customer;
-        _balance = InitialDeposit;
-        _createdDate = DateTime.Now;
-        _lastAnnualChargeDate = _createdDate;
+        _nameOfBusiness = NameOfBusiness;
+        _typeOfBusiness = TypeOfBusiness;
+        _businessAddress = BusinessAddress;
+        Balance = InitialDeposit;
+        _createdDate = (CreatedDate == default) ? DateTime.Now: CreatedDate;  // Check for default value (01/01/0001 00:00:00) for future case when reading in accounts, otherwise set todays date
+        _lastAnnualChargeDate = AnnualCharge(LastAnnualChargeDate);  // (LastAnnualChargeDate == default) ? AnnualCharge() : LastAnnualChargeDate;
         _isActive = true;
-        _overdraftAmount = 0;
         _loans = new List<Loan>();
         _hasRequestedChequeBook = false;
+        Customer.AddAccount(this);
     }
 
     public override void OpenAccount()
@@ -50,7 +57,7 @@ class BusinessAccount : Account
         {
             if (amount > 0)
             {
-                _balance += amount;
+                Balance += amount;
             }
             else
             {
@@ -67,13 +74,13 @@ class BusinessAccount : Account
             {
                 throw new ArgumentException("Withdraw must be a positive, non-zero number");
             }
-            else if (_balance + _overdraftAmount < amount)
+            else if (Balance + _overdraftAmount < amount)
             {
                 throw new InvalidOperationException("Insufficient funds or overdraft limit exceeded.");
             }
             else
             {
-                _balance -= amount;
+                Balance -= amount;
             }
         }
             
@@ -91,24 +98,44 @@ class BusinessAccount : Account
             throw new InvalidOperationException("Cheque book already requested.");
         }
     }
-    public void AnnualCharge()
+    public DateTime AnnualCharge(DateTime lastDate)  // Updated this to return new LastAnnualChargeDate, pass in a date when reading from file to use in the check otherwise todays date is used.
     {
-        if (!_isActive)
-            return;
+        //if (!_isActive) Perhaps not required will reinstate later if needed
+        //    return DateTime.UnixEpoch;
 
         DateTime today = DateTime.Now;
-        if (today >= _lastAnnualChargeDate.AddYears(1))
+
+        if (_createdDate.Date == today.Date)
         {
-            if (_balance >= 120)
+            if (Balance >= 120)
             {
-                _balance -= 120;
-                _lastAnnualChargeDate = today;
+                Balance -= 120;
+                return today;
             }
 
             else
             {
                 throw new InvalidOperationException("Insufficient balance for annual charge.");
             }
+        }
+
+        else if (today.Date == lastDate.AddYears(1).Date)  // Updated to check today is exactly a year later since last charge, before was a year or more
+        {
+            if (Balance >= 120)
+            {
+                Balance -= 120;
+                _lastAnnualChargeDate = today;
+                return today;
+            }
+
+            else
+            {
+                throw new InvalidOperationException("Insufficient balance for annual charge.");
+            }
+        }
+        else
+        {
+            return lastDate;
         }
     }
 

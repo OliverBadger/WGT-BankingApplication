@@ -4,13 +4,13 @@
     {
         private decimal _amount;
         private decimal _interestRate;
-        private DateTime _startDate;
         private int _loanTermInMonths;
+        private DateTime _startDate;
 
-        public decimal Amount { get { return _amount; } set { _amount = value; } }
-        public decimal InterestRate { get { return _interestRate; } set { _interestRate = value; } }
-        public DateTime StartDate { get { return _startDate; }}
+        public decimal Amount { get => _amount; set => _amount = value; }
+        public decimal InterestRate { get => _interestRate; set => _interestRate = value; }
         public int LoanTermInMonths { get => _loanTermInMonths; }
+        public DateTime StartDate { get => _startDate; }
 
         public Loan(decimal Amount, decimal InterestRate, int LoanTermInMonths)  // May have to improve in the future
         {

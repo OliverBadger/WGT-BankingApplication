@@ -2,16 +2,17 @@
 
 class PersonalAccount : Account
 {
-    //    private List<DirectDebit> _directDebit;
-    //    private List<StandingOrder> _standingOrder;
-    //    private bool _isActive;
 
-    //    public PersonalAccount()
-    //    {
-    //        _directDebit = new List<DirectDebit>(); //stores direct debits linked to a personal account
-    //        _standingOrder = new List<StandingOrder>(); //stores standing orders linked to a personal account
-    //        private bool _isActive = false;
-    //    }
+    private List<DirectDebit> _directDebit;
+    private List<StandingOrder> _standingOrder;
+    private bool _isActive;
+    public PersonalAccount(Customer Customer, decimal InitialDeposit) : base(Customer.ID, Customer.FirstName, Customer.Surname, Customer.Password)
+    {
+        _directDebit = new List<DirectDebit>(); //stores direct debits linked to a personal account
+        _standingOrder = new List<StandingOrder>(); //stores standing orders linked to a personal account
+        Balance = InitialDeposit;
+        // private bool _isActive = false;
+    }
 
     //public void CreateDirectDebit(string payee, decimal amount, DateTime date, string reference)
     //    {
@@ -35,7 +36,6 @@ class PersonalAccount : Account
     //        _standingOrder.Add(newStandingOrder);
     //    }
     //    public void RemoveStandingOrder(string reference) { 
-
     //        for (int i = 0; i < _standingOrder.Count; i++) //loop through each standing orders in the list
     //        {
     //           if (_standingOrder[i].Reference == reference) //check the current stnading order referece matches the given reference
@@ -46,62 +46,42 @@ class PersonalAccount : Account
     //        }
     //    }
 
-    //   public override void OpenAccount()
+    public override void OpenAccount()
+    {
+        _isActive = true;
+    }
+
+    public override void CloseAccount()
+    {
+        _isActive = false;
+    }
+
+    public override void Deposit(decimal amount) { }
+    //if (!_isActive)
     //{
-    //    _isActive = true;
-    //}
+    //    throw new InvalidOperationException("Accont is closed. Unable to make a deposit"); //can't make deposit if account is closed
 
-    //public override void CloseAccount()
-    //{
-    //    _isActive = false;
-    //}
-
-    //public override void Deposit(decimal amount)
-    //    {
-    //        if (!_isActive)
-    //    {
-    //        throw new InvalidOperationException("Accont is closed. Unable to make a deposit"); //can't make deposit if account is closed
-
-    //        if (amount < 0.01m)
+    //    if (amount < 0.01m)
     //    {
     //        throw new ArgumentException("Deposit must be a positive amount."); //depsiot amount should be greater than or equal to 0.01. e.g., can deposit at least 1p
     //    }
     //    Balance += amount; //add deposit amount to balance
     //    Console.WriteLine($"{amount}  deposited successfully. Current Balance: {Balance}");
-    //    }
+    //}
 
-    //    public override void Withdraw(decimal amount)
-    //    {
-    //        if (!_isActive)
+    public override void Withdraw(decimal amount) { }
+
+    //    if (!_isActive)
     //    {
     //        Console.WriteLine("Account is closed. Cannot withdraw.");
     //    }
-    //        elseif (amount <0.01m)
-    //    {
+    //    elseif(amount < 0.01m)
+    //{
     //        Console.WriteLine("Withdrawal amount must be at least 1p.");
     //    }
-    //    else
+    //else
     //    {
     //        Balance -= amount; //subtract withdrawal amount from balance
     //        Console.WriteLine($"{amount} withdrawn successfully. Current balance: {Balance}");
     //    }
-    public override void CloseAccount()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void Deposit(decimal amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void OpenAccount()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void Withdraw(decimal amount)
-    {
-        throw new NotImplementedException();
-    }
 }

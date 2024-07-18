@@ -13,8 +13,6 @@ class MyClass{
     {
         initUsers();
         UserCredentials.initUserCredentials();
-        //Console.WriteLine("This is a Banking Application!");
-        //Console.WriteLine("This is just to test the branches");
 
         //Login script validates users
         LoginScript ls = new LoginScript();
@@ -27,17 +25,65 @@ class MyClass{
 
         Console.WriteLine(Customers[1].FirstName);
 
-
         ISA savAcc1 = new ISA(c1, 1);
         c1.AddAccount(savAcc1);
 
         ISA savAcc2 = new ISA(c1, 1);
         ISA savAcc3 = new ISA(c1, 1);
         ISA savAcc4 = new ISA(c1, 1);
-        
-        PersonalAccount p1 = new PersonalAccount();
-        c1.AddAccount(p1);
-        
+      
+        ISA s1 = new(c1, 500);
+        ISA s2 = new(c2, 7750);
+        ISA s3 = new(c3, 4340);
+
+        PersonalAccount p1 = new(c1, 100);
+        PersonalAccount p2 = new(c2, 900);
+
+        // Will need to make sure initial deposit entered is greater than 120, as the annual fee will instantly deduct if the business account is new/being created today.
+        BusinessAccount b1 = new(c1, "OpenAI", "NonProfit", "3180 18th St. San Francisco, California 94110", 140);  
+        BusinessAccount b2 = new(c2, "Meta", "ForProfit", "1 Meta Way Menlo Park California 94025", 10000);
+        BusinessAccount b3 = new(c3, "HP", "ForProfit", "70 St Mary Axe London EC3A 8BE", 35350, DateTime.Parse("18/07/2021"), DateTime.Parse("18/07/2024"));  // Test for reading in a file
+
+        // This can be removed, just testing to see if the accounts are working
+        Console.WriteLine($"""
+            {c1.FirstName} has a balance of: {b1.Balance:C} in their business account.
+            The last time {c1.FirstName} was charged was {b1.LastAnnualChargeDate}
+
+            {c2.FirstName} has a balance of: {b2.Balance:C} in their business account.
+            The last time {c2.FirstName} was charged was {b2.LastAnnualChargeDate}
+
+            {c3.FirstName} has a balance of: {b3.Balance:C} in their business account.
+            The last time {c3.FirstName} was charged was {b3.LastAnnualChargeDate}
+
+            """);
+
+        Console.WriteLine($"{c1.FirstName} has a balance of: {p1.Balance:C} in their personal account.");
+        Console.WriteLine($"{c2.FirstName} has a balance of: {p2.Balance:C} in their personal account.");
+        Console.WriteLine();
+        Console.WriteLine($"{c1.FirstName} has a balance of: {s1.Balance:C} in their ISA account.");
+        Console.WriteLine($"{c2.FirstName} has a balance of: {s2.Balance:C} in their ISA account.");
+
+        //Console.WriteLine("\nThese accounts are associated to Customer 1:");
+        //foreach (var test in c1.Accounts)
+        //{
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //}
+
+        //Console.WriteLine("\nThese accounts are associated to Customer 2:");
+        //foreach (var test in c2.Accounts)
+        //{
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //}
+
+        //Console.WriteLine("\nThese accounts are associated to Customer 3:");
+        //foreach (var test in c3.Accounts)
+        //{
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //}
+
+        //login();
+        //InputLoop();
+                          
         // Writes the array of customers to the Login Script
         ls.Customers = Customers;
         ls.login();
