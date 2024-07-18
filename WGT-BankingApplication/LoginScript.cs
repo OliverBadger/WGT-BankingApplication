@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -11,6 +12,7 @@ namespace WGT_BankingApplication
     {
 
         private Customer[] _customers;
+        private static string userDetails = "Users.JSON";
 
         public Customer[] Customers { get => _customers; set => _customers = value; }
 
@@ -85,7 +87,7 @@ namespace WGT_BankingApplication
             Console.Clear();
             //testing 
             Console.WriteLine("1. Customer search using Customer Number");
-            Console.WriteLine("2. Customer search using full name (not implemented can return more than one customer if same surname)");
+            Console.WriteLine("2. Customer search using full name (Please be warned this will not ask for a prompt it will just display the customer details!)");
             Console.WriteLine("3. Customer search using account number (not implemented yet)");
 
             bool validSelection = false;
@@ -96,11 +98,28 @@ namespace WGT_BankingApplication
                 {
                     case "1":
                         validSelection = true;
-                        SearchByID();
+                        PromptForCustomerNumber();
                         break;
                     case "2":
                         validSelection = true;
-                        SearchBySurname();
+                        // Gathers first and last name to search by
+                        Console.Clear();
+                        Console.Write("Please enter the customer's first name: ");
+                        string firstName = Console.ReadLine();
+                        Console.Write("Please enter the customer's surname: ");
+                        string surname = Console.ReadLine();
+
+                        var potentialCustomers = SearchCustomersByName(firstName, surname);
+                        foreach ( var customer in potentialCustomers)
+                        {
+                            PrintCustomerDetails(customer);
+                            Console.WriteLine("");
+                            Console.WriteLine(new string('=', 50));
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(new string('=', 50));
+                        }
+
                         break;
                     default: break;
                 }
@@ -108,56 +127,91 @@ namespace WGT_BankingApplication
             } while (!validSelection);
         }
 
-        public void SearchByID()
+        public void PromptForCustomerNumber()
         {
-            bool MatchFound = false;
-            do
+            // Gathers first and last name to search by
+            Console.Clear();
+            Console.Write("Please enter the customer's first name: ");
+            string firstName = Console.ReadLine();
+            Console.Write("Please enter the customer's surname: ");
+            string surname = Console.ReadLine();
+
+            var potentialCustomers = SearchCustomersByName(firstName, surname);
+
+            // Incase there are no customers by that name
+            if (potentialCustomers.Count == 0)
             {
+                Console.WriteLine("No customers found with the given name.");
+                return;
+            }
 
+            // Saves the random digit position for the prompt 
+            Random random = new Random();
+            HashSet<int> positions = new HashSet<int>();
+            while (positions.Count < 3)
+            {
+                positions.Add(random.Next(0, 12));
+            }
 
-                Console.Clear();
-                Console.Write("Please enter customer id: ");
-                string? id = Console.ReadLine();
+            // Creating a new dictionary to store the location and the character at that location
+            Dictionary<int, char> userInputDigits = new Dictionary<int, char>();
+            foreach (int pos in positions)
+            {
+                Console.Write($"Please enter the digit at position {pos + 1}: ");
+                char userDigit = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+                userInputDigits[pos] = userDigit;
+            }
 
-                foreach (Customer c in _customers)
+            // Validation method to see if it is correct
+            foreach (var customer in potentialCustomers)
+            {
+                if (ValidateCustomerNumber(customer.CustomerNumber, userInputDigits))
                 {
-                    if (c.ID.ToString() == id)
-                    {
-                        Console.WriteLine($"Account {id} Found ");
-                        LookAtCustomerDetails(c);
-                        MatchFound = true;
-                    }
+                    Console.Clear();
+                    PrintCustomerDetails(customer);
+                    return;
                 }
-            } while (!MatchFound);
+            }
+
+            Console.WriteLine("Validation failed. No matching customer found.");
         }
 
-        public void SearchBySurname()
+        public List<Customer> SearchCustomersByName(string firstName, string surname)
         {
-            bool MatchFound = false;
-            do
+            List<Customer> potentialCustomers = new List<Customer>();
+            if (File.Exists(userDetails))
             {
-                Console.Clear();
-                Console.Write("Please enter customer full name: "); // this can return more than one /\
-                string? fullName = Console.ReadLine();
-
-                foreach (Customer c in _customers)
+                var existingUsers = JsonConvert.DeserializeObject<Customer[]>(File.ReadAllText(userDetails));
+                foreach (var user in existingUsers)
                 {
-                    string CustomerName = $"{c.FirstName} {c.Surname}".ToLower();
-
-                    if (CustomerName == fullName.ToLower())
+                    if (user.FirstName.Equals(firstName, StringComparison.OrdinalIgnoreCase) &&
+                        user.Surname.Equals(surname, StringComparison.OrdinalIgnoreCase))
                     {
-                        LookAtCustomerDetails(c);
-                        MatchFound = true;
+                        potentialCustomers.Add(user);
                     }
                 }
-            } while (!MatchFound);
+            }
+            return potentialCustomers;
+        }
+
+        // Checks if the keys are the same as the input
+        public bool ValidateCustomerNumber(string customerNumber, Dictionary<int, char> userInputDigits)
+        {
+            foreach (var entry in userInputDigits)
+            {
+                if (customerNumber[entry.Key] != entry.Value)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         //Before calling we sould add some security stuff to make sure the customer has proven their identity 
         //TODO add account information and ability to look at individual accounts here
-        public void LookAtCustomerDetails(Customer customer)
+        public void PrintCustomerDetails(Customer customer)
         {
-            Console.Clear();
             Console.WriteLine(new string('=', 50));
             Console.WriteLine("           Acme Bank Customer Details");
             Console.WriteLine(new string('=', 50));
@@ -166,17 +220,6 @@ namespace WGT_BankingApplication
             Customer Number   : {customer.CustomerNumber}
             Name              : {customer.FirstName} {customer.Surname}
             """");
-            Console.WriteLine(new string('-', 50));
-            Console.WriteLine("Accounts:");
-            Console.WriteLine(new string('-', 50));
-
-            Console.Clear();
-            Console.WriteLine(new string('=', 50));
-            Console.WriteLine("           Epic Bank Customer Details");
-            Console.WriteLine(new string('=', 50));
-            Console.WriteLine($"ID                : {customer.ID}");
-            Console.WriteLine($"Customer Number   : {customer.CustomerNumber}");
-            Console.WriteLine($"Name              : {customer.FirstName} {customer.Surname}");
             Console.WriteLine(new string('-', 50));
             Console.WriteLine("Accounts:");
             Console.WriteLine(new string('-', 50));
