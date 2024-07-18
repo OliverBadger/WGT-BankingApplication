@@ -4,15 +4,16 @@ class PersonalAccount : Account
 {
     private List<DirectDebit> _directDebit;
     private List<StandingOrder> _standingOrder;
+    private bool _isActive;
 
     public PersonalAccount()
     {
         _directDebit = new List<DirectDebit>(); //stores direct debits linked to a personal account
         _standingOrder = new List<StandingOrder>(); //stores standing orders linked to a personal account
-
+        private bool _isActive = false;
     }
 
-    public void CreateDirectDebit(string payee, decimal amount, DateTime date, string reference)
+public void CreateDirectDebit(string payee, decimal amount, DateTime date, string reference)
     {
         DirectDebit newDirectDebit = new DirectDebit(payee, amount, date, reference);
         _directDebit.Add(newDirectDebit); //add a new direct debit to the list
@@ -45,23 +46,43 @@ class PersonalAccount : Account
         }
     }
 
-    public override void OpenAccount()
-    {
-        throw new NotImplementedException();
-    }
+   public override void OpenAccount()
+{
+    _isActive = true;
+}
 
-    public override void CloseAccount()
-    {
-        throw new NotImplementedException();
-    }
+public override void CloseAccount()
+{
+    _isActive = false;
+}
 
-    public override void Deposit(decimal amount)
+public override void Deposit(decimal amount)
     {
-        throw new NotImplementedException();
+        if (!_isActive)
+    {
+        throw new InvalidOperationException("Accont is closed. Unable to make a deposit"); //can't make deposit if account is closed
+  
+        if (amount < 0.01m)
+    {
+        throw new ArgumentException("Deposit must be a positive amount."); //depsiot amount should be greater than or equal to 0.01. e.g., can deposit at least 1p
+    }
+    Balance += amount; //add deposit amount to balance
+    Console.WriteLine($"{amount}  deposited successfully. Current Balance: {Balance}");
     }
 
     public override void Withdraw(decimal amount)
     {
-        throw new NotImplementedException();
+        if (!_isActive)
+    {
+        Console.WriteLine("Account is closed. Cannot withdraw.");
+    }
+        elseif (amount <0.01m)
+    {
+        Console.WriteLine("Withdrawal amount must be at least 1p.");
+    }
+    else
+    {
+        Balance -= amount; //subtract withdrawal amount from balance
+        Console.WriteLine($"{amount} withdrawn successfully. Current balance: {Balance}");
     }
 }
