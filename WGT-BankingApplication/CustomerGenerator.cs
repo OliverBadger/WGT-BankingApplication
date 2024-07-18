@@ -52,7 +52,7 @@ namespace WGT_BankingApplication
         string[]? PersonalAccountNumbers;
         string[]? BusinessAccountNumbers;
 
-        public static void GenerateNewUserData()
+        public static Customer[] GenerateNewUserData()
         {
             //selects random names from array
             Random randomPick = new Random();
@@ -65,6 +65,7 @@ namespace WGT_BankingApplication
             File.WriteAllText("Users.json", json);
             Console.WriteLine("users prented");
 
+            return userList;
          
         }
 

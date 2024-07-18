@@ -16,7 +16,6 @@ namespace WGT_BankingApplication
 
             if (File.Exists("employeeCredentials.json"))
             {
-                Console.WriteLine("sdasdasda"); //dict = deseraialize data 
                 string json = File.ReadAllText("employeeCredentials.json");
                 employeeCredentials = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             }
