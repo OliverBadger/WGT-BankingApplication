@@ -1,14 +1,14 @@
 ﻿namespace WGT_BankingApplication;
 
-abstract class Account
+abstract class Account : Customer
 {
     private string _accountNumber;
     private decimal _balance = 0.00m;
 
-    public string AccountNumber { get { return _accountNumber; } }
-    public decimal Balance { get { return _balance; } }  // Potentially should be set to virtual so we can override with separate account constructors
+    public string AccountNumber { get => _accountNumber; }
+    public virtual decimal Balance { get => _balance; protected set => _balance = value; }
 
-    public Account()
+    public Account(int ID, string FirstName, string Surname, string Password) : base(ID, FirstName, Surname, Password)
     {
         _accountNumber = GenerateRandomAccountNumber();
     }
