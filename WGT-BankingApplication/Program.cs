@@ -15,12 +15,17 @@ class MyClass{
         UserCredentials.initUserCredentials();
         //Console.WriteLine("This is a Banking Application!");
         //Console.WriteLine("This is just to test the branches");
+
+        //changing to use serialized accounts 
         
-        Customer c1 = new Customer(1, "Bob","Beltch" , "test1234");
-        Customer c2 = new Customer(1, "Bob","Dylan" , "test2234");
-        Customer c3 = new Customer(1, "Bob","Marley" , "test3234");
-        Customer c4 = new Customer(1, "Bob","Ross" , "test4234");
-        
+
+        Customer c1 = Customers[0];
+        Customer c2 = Customers[1];
+        Customer c3 = Customers[2];
+        Customer c4 = Customers[3];
+
+        Console.WriteLine(Customers[1].FirstName);
+
         ISA savAcc1 = new ISA(c1, 1);
         c1.AddAccount(savAcc1);
 
@@ -30,14 +35,6 @@ class MyClass{
         
         PersonalAccount p1 = new PersonalAccount();
         c1.AddAccount(p1);
-
-        //Console.WriteLine(c1.FirstName);
-        //Console.WriteLine(c1.ID);
-        //Console.WriteLine(c1.Account_List);
-        //Console.WriteLine(c1.GetAccounts);
-        
-        Console.WriteLine($"Welcome back {c1.FirstName}, your account number is: {p1.AccountNumber}");
-        Console.WriteLine($"Your current balance is: {p1.Balance}");
         
         login();
         InputLoop();
@@ -56,7 +53,7 @@ class MyClass{
         else
         {
             //generate new users 
-            CustomerGenerator.GenerateNewUserData();
+            Customers = CustomerGenerator.GenerateNewUserData();
             //generate new accounts => 
         }
     }
