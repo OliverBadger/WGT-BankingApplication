@@ -18,6 +18,7 @@ class MyClass{
 
         //changing to use serialized accounts 
         
+        LoginScript ls = new LoginScript();
 
         Customer c1 = Customers[0];
         Customer c2 = Customers[1];
@@ -25,6 +26,7 @@ class MyClass{
         Customer c4 = Customers[3];
 
         Console.WriteLine(Customers[1].FirstName);
+
 
         ISA savAcc1 = new ISA(c1, 1);
         c1.AddAccount(savAcc1);
@@ -36,8 +38,10 @@ class MyClass{
         PersonalAccount p1 = new PersonalAccount();
         c1.AddAccount(p1);
         
-        login();
-        InputLoop();
+        // Writes the array of customers to the Login Script
+        ls.Customers = Customers;
+        ls.login();
+        ls.InputLoop();
     }
 
     static Customer[] Customers;
@@ -56,159 +60,5 @@ class MyClass{
             Customers = CustomerGenerator.GenerateNewUserData();
             //generate new accounts => 
         }
-    }
-
-
-    //do while for login if credentials are valid escape do while call next method outside of do while block
-
-
-    //We can move login methods and customer searching methods to dedicated classes for clarity and to keep this class consice
-    private static void login()
-    {
-        string username = "";
-
-        bool CorrectUsernameProvided = false;
-
-        do
-        {
-            Console.Clear();
-            //encryption testing (should make unit test for this)
-            //string test = Encryption.encryptString("poapsdopasodasf");
-            //string test2 = Encryption.Decode(test);
-            //Console.WriteLine(test);
-            //Console.WriteLine(test2);
-
-            Console.Write("Please Enter Employee Id: ");
-            string? employeeUserName = Console.ReadLine();
-            if (isUserNameValid(employeeUserName))
-            {
-                CorrectUsernameProvided = true;
-                username = employeeUserName;
-            }
-                
-
-        } while (!CorrectUsernameProvided);
-
-        //get password
-
-        bool CorrectPasswordProvided = false;
-
-        do
-        {
-            Console.Clear();
-            Console.Write("Please Enter Password: ");
-            string? employeePassword = Console.ReadLine();
-            if (isPasswordValid(username, employeePassword))
-                CorrectPasswordProvided = true;
-
-        } while (!CorrectPasswordProvided);
-
-    }
-    private static bool isUserNameValid(string username)
-    {
-        if (UserCredentials.employeeCredentials.ContainsKey(Encryption.encryptString(username)))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private static bool isPasswordValid(string username, string password)
-    {
-        if (Encryption.Decode(UserCredentials.employeeCredentials[Encryption.encryptString(username)]) == password)
-        {
-            return true;
-        }
-        return false;
-    }
-
-
-    //Only called after teller has succesfully logged in and credentials match
-    private static void InputLoop()
-    {
-        Console.Clear();
-        //testing 
-        Console.WriteLine("1. Customer search using ID");
-        Console.WriteLine("2. Customer search using full name (not implemented can return more than one customer if same surname)");
-        Console.WriteLine("3. Customer search using account number (not implemented yet)");
-
-
-
-        bool validSelection = false;
-        do
-        {
-            string? input = Console.ReadLine();
-            switch (input) //have key of possible inputs and dict of output
-            {
-                case "1":
-                    validSelection = true;
-                    SearchByID();
-                    break;
-                case "2":
-                    validSelection = true;
-                    SearchBySurname();
-                    break;
-                default: break;
-            }
-
-        } while (!validSelection);
-    }
-
-    private static void SearchByID()
-    {
-        bool MatchFound = false;
-        do
-        {
-
-
-            Console.Clear();
-            Console.Write("Please enter customer id: ");
-            string? id = Console.ReadLine();
-
-            foreach (Customer c in Customers)
-            {
-                if (c.ID.ToString() == id)
-                {
-                    Console.WriteLine($"Account {id} Found ");
-                    LookAtCustomerDetails(c);
-                    MatchFound = true;
-                }
-            }
-        } while (!MatchFound);
-    }
-
-    private static void SearchBySurname()
-    {
-        bool MatchFound = false;
-        do
-        {
-
-
-            Console.Clear();
-            Console.Write("Please enter customer full name: "); // this can return more than one /\
-            string? fullName = Console.ReadLine();
-
-            foreach (Customer c in Customers)
-            {
-                string CustomerName = $"{c.FirstName} {c.Surname}".ToLower();
-
-                if (CustomerName == fullName.ToLower())
-                {
-                    LookAtCustomerDetails(c);
-                    MatchFound=true;
-                }
-            }
-        } while (!MatchFound);
-    }
-
-    //Before calling we sould add some security stuff to make sure the customer has proven their identity 
-    //TODO add account information and ability to look at individual accounts here
-    private static void LookAtCustomerDetails(Customer customer)
-    {
-        Console.Clear();
-        Console.WriteLine($""""
-            ID: {customer.ID}
-            name: {customer.FirstName} {customer.Surname}
-            """");
     }
 }

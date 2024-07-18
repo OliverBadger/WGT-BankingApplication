@@ -3,6 +3,7 @@
 class Customer
 {
     private int _id;
+    private string _customerNumber;
     private string _firstName;
     private string _surname;
     private string _password;
@@ -22,13 +23,14 @@ class Customer
 
 
     // Could impliment overides for each customer so it takes in the account
-    public Customer(int id, string firstname, string surname , string password)  // Initial testing need to improve 
+    public Customer(int id, string firstname, string surname , string password, string customerNumber)  // Initial testing need to improve 
     {
         _id = id;
         _firstName = firstname;
         _surname = surname;
         _password = password;
         _accounts = new List<Account>();
+        _customerNumber = customerNumber;
     }
 
     public void AddAccount(Account account)

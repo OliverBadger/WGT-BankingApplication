@@ -32,8 +32,7 @@ namespace WGT_BankingApplication
     //    public string FirstName = _firstName;
     //    public string SecondName = _secondName;
     //}
-    
-    
+        
     class CustomerGenerator
     {
         //json file will be stored in project directory
@@ -52,24 +51,41 @@ namespace WGT_BankingApplication
         string[]? PersonalAccountNumbers;
         string[]? BusinessAccountNumbers;
 
-        public static Customer[] GenerateNewUserData()
+        public  Customer[] GenerateNewUserData()
         {
             //selects random names from array
             Random randomPick = new Random();
             for (int i=0; i < NUMBER_OF_USERS; i++)
             {
+                // Generates customer Data
                 userList[i] = new Customer(i, FirstNames[randomPick.Next(1, FirstNames.Length)],
-                    SecondNames[randomPick.Next(1, SecondNames.Length)], "password");
+                    SecondNames[randomPick.Next(1, SecondNames.Length)], "password", GenerateCustomerNumber());
             }
             string json = JsonConvert.SerializeObject(userList, Formatting.Indented);
             File.WriteAllText("Users.json", json);
             Console.WriteLine("users prented");
 
             return userList;
-         
         }
 
+        public static string GenerateCustomerNumber()
+        {
+            // Generate a unique customer number (e.g., CUST-000001)
+            string prefix = "CUST-";
+            int number = GetNextCustomerNumber();
+            return prefix + number.ToString("D6");
+        }
 
+        private static int GetNextCustomerNumber()
+        {
+            // For simplicity, use the count of the existing users in the JSON file
+            if (File.Exists(userDetails))
+            {
+                var existingUsers = JsonConvert.DeserializeObject<Customer[]>(File.ReadAllText(userDetails));
+                return existingUsers.Length + 1;
+            }
+            return 1;
+        }
     }
 }
 
