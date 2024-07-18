@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -83,7 +84,7 @@ namespace WGT_BankingApplication
         {
             Console.Clear();
             //testing 
-            Console.WriteLine("1. Customer search using ID");
+            Console.WriteLine("1. Customer search using Customer Number");
             Console.WriteLine("2. Customer search using full name (not implemented can return more than one customer if same surname)");
             Console.WriteLine("3. Customer search using account number (not implemented yet)");
 
@@ -157,10 +158,56 @@ namespace WGT_BankingApplication
         public void LookAtCustomerDetails(Customer customer)
         {
             Console.Clear();
+            Console.WriteLine(new string('=', 50));
+            Console.WriteLine("           Acme Bank Customer Details");
+            Console.WriteLine(new string('=', 50));
             Console.WriteLine($""""
-            ID: {customer.ID}
-            name: {customer.FirstName} {customer.Surname}
+            ID                : {customer.ID}
+            Customer Number   : {customer.CustomerNumber}
+            Name              : {customer.FirstName} {customer.Surname}
             """");
+            Console.WriteLine(new string('-', 50));
+            Console.WriteLine("Accounts:");
+            Console.WriteLine(new string('-', 50));
+
+            Console.Clear();
+            Console.WriteLine(new string('=', 50));
+            Console.WriteLine("           Epic Bank Customer Details");
+            Console.WriteLine(new string('=', 50));
+            Console.WriteLine($"ID                : {customer.ID}");
+            Console.WriteLine($"Customer Number   : {customer.CustomerNumber}");
+            Console.WriteLine($"Name              : {customer.FirstName} {customer.Surname}");
+            Console.WriteLine(new string('-', 50));
+            Console.WriteLine("Accounts:");
+            Console.WriteLine(new string('-', 50));
+            if (customer.PersonalAccount_List != null)
+            {
+                foreach (var account in customer.PersonalAccount_List)
+                {
+                    Console.WriteLine($"""
+                        Personal Account - Account Number  : {account.AccountNumber}
+                        Personal Account - Balance         : {account.Balance}
+                        """);
+                }
+            }
+            if (customer.BusinessAccount_List != null)
+            {
+                foreach (var account in customer.BusinessAccount_List)
+                {
+                    Console.WriteLine($"""
+                        Business - Account Number  : {account.AccountNumber}
+                        Business - Balance         : {account.Balance}
+                        """);
+                }
+            }
+            if (customer.Isa != null)
+            {
+                Console.WriteLine($"""
+                        ISA - Account Number  : {customer.Isa.AccountNumber}
+                        ISA - Balance         : {customer.Isa.Balance}
+                        """);
+            }
+            Console.WriteLine(new string('=', 50));
         }
     }
 }

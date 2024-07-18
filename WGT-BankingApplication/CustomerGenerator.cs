@@ -51,15 +51,18 @@ namespace WGT_BankingApplication
         string[]? PersonalAccountNumbers;
         string[]? BusinessAccountNumbers;
 
-        public  Customer[] GenerateNewUserData()
+        public static Customer[] GenerateNewUserData()
         {
             //selects random names from array
             Random randomPick = new Random();
             for (int i=0; i < NUMBER_OF_USERS; i++)
             {
                 // Generates customer Data
-                userList[i] = new Customer(i, FirstNames[randomPick.Next(1, FirstNames.Length)],
-                    SecondNames[randomPick.Next(1, SecondNames.Length)], "password", GenerateCustomerNumber());
+                string firstName = FirstNames[randomPick.Next(FirstNames.Length)];
+                string secondName = SecondNames[randomPick.Next(SecondNames.Length)];
+                string customerNumber = GenerateCustomerNumber(firstName, secondName);
+
+                userList[i] = new Customer(i, firstName, secondName, "password", customerNumber);
             }
             string json = JsonConvert.SerializeObject(userList, Formatting.Indented);
             File.WriteAllText("Users.json", json);
@@ -68,21 +71,33 @@ namespace WGT_BankingApplication
             return userList;
         }
 
-        public static string GenerateCustomerNumber()
+        public static string GenerateCustomerNumber(string firstName, string lastName)
         {
-            // Generate a unique customer number (e.g., CUST-000001)
-            string prefix = "CUST-";
-            int number = GetNextCustomerNumber();
+            // Generate a unique customer number using the first four letters of the customer's first and last names
+            string prefix = (firstName.Substring(0, Math.Min(4, firstName.Length)) + lastName.Substring(0, Math.Min(4, lastName.Length))).ToUpper();
+            int number = GetNextCustomerNumber(prefix);
             return prefix + number.ToString("D6");
         }
 
-        private static int GetNextCustomerNumber()
+        private static int GetNextCustomerNumber(string prefix)
         {
-            // For simplicity, use the count of the existing users in the JSON file
+            // For simplicity, use the count of the existing users in the JSON file and ensure uniqueness per prefix
             if (File.Exists(userDetails))
             {
                 var existingUsers = JsonConvert.DeserializeObject<Customer[]>(File.ReadAllText(userDetails));
-                return existingUsers.Length + 1;
+                int maxNumber = 0;
+                foreach (var user in existingUsers)
+                {
+                    if (user.CustomerNumber.StartsWith(prefix))
+                    {
+                        int userNumber = int.Parse(user.CustomerNumber.Substring(prefix.Length));
+                        if (userNumber > maxNumber)
+                        {
+                            maxNumber = userNumber;
+                        }
+                    }
+                }
+                return maxNumber + 1;
             }
             return 1;
         }

@@ -21,6 +21,8 @@ class Customer
     public List<PersonalAccount> PersonalAccount_List { get { return _personalAccounts; } }
     public List<BusinessAccount> BusinessAccount_List { get { return _businessAccounts; } }
 
+    public string CustomerNumber { get => _customerNumber; set => _customerNumber = value; }
+
 
     // Could impliment overides for each customer so it takes in the account
     public Customer(int id, string firstname, string surname , string password, string customerNumber)  // Initial testing need to improve 

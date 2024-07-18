@@ -16,10 +16,10 @@ class MyClass{
         //Console.WriteLine("This is a Banking Application!");
         //Console.WriteLine("This is just to test the branches");
 
-        //changing to use serialized accounts 
-        
+        //Login script validates users
         LoginScript ls = new LoginScript();
 
+        //changing to use serialized accounts 
         Customer c1 = Customers[0];
         Customer c2 = Customers[1];
         Customer c3 = Customers[2];
