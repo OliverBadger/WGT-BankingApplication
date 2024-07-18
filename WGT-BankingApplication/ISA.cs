@@ -5,7 +5,6 @@ class ISA : Account
     private Customer _accountHolder;
     private decimal APR = 2.75m;
     private int _accountNumber;
-    private decimal _balance;
     private decimal _annualInterestAccured;
     private DateTime _createdDate;
     private bool _isActive;
@@ -13,14 +12,15 @@ class ISA : Account
     private int _yearMaturity;
     private List<decimal> _receipts = new List<decimal>();
 
-    public ISA(Customer customer, int initialDeposit)
+    public ISA(Customer Customer, int InitialDeposit) : base(Customer.ID, Customer.FirstName, Customer.Surname, Customer.Password)
     {
-        _accountHolder = customer;
+        _accountHolder = Customer;
         _accountNumber = GenerateAccountNumber();
-        _balance = initialDeposit;
+        Balance = InitialDeposit;
         _createdDate = DateTime.Now;
         _isActive = true;
-        _receipts.Add(_balance);
+        _receipts.Add(Balance);
+        Customer.AddAccount(this);
     }
 
     private int GenerateAccountNumber()
@@ -41,16 +41,16 @@ class ISA : Account
     public override void Deposit(decimal amount)
     {
         if (amount <= 0) { throw new ArgumentException("Deposit amount must be greater than 0."); }
-        _balance += amount;
-        _receipts.Add(_balance);
+        Balance += amount;
+        _receipts.Add(Balance);
     }
 
     public override void Withdraw(decimal amount)
     {
         if (amount <= 0) throw new ArgumentException("Withdrawal amount must be positive.");
-        if (_balance - amount < 0) throw new InvalidOperationException("Insufficient funds.");
-        _balance -= amount;
-        _receipts.Add(_balance);
+        if (Balance - amount < 0) throw new InvalidOperationException("Insufficient funds.");
+        Balance -= amount;
+        _receipts.Add(Balance);
 
     }
 
@@ -67,14 +67,14 @@ class ISA : Account
             }
 
             decimal interest = averageAnnualBalance * (APR / 100);
-            _balance += interest;
+            Balance += interest;
             _annualInterestAccured += interest;
         }
     }
 
     public string GetAccountDetails()
     {
-        return $"Account Number: {_accountNumber}, Balance: {_balance:C}, Annual Interest Rate: {APR}%, Created Date: {_createdDate}, Active: {_isActive}";
+        return $"Account Number: {_accountNumber}, Balance: {Balance:C}, Annual Interest Rate: {APR}%, Created Date: {_createdDate}, Active: {_isActive}";
     }
 
     public bool HasMaturedOneYear()
