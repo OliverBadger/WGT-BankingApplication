@@ -156,35 +156,49 @@ class MyClass{
 
     private static void SearchByID()
     {
-        Console.Clear();
-        Console.Write("Please enter customer id: ");
-        string? id = Console.ReadLine();
-        
-        foreach (Customer c in Customers)
+        bool MatchFound = false;
+        do
         {
-            if (c.ID.ToString() == id)
+
+
+            Console.Clear();
+            Console.Write("Please enter customer id: ");
+            string? id = Console.ReadLine();
+
+            foreach (Customer c in Customers)
             {
-                Console.WriteLine($"Account {id} Found ");
-                LookAtCustomerDetails(c);
+                if (c.ID.ToString() == id)
+                {
+                    Console.WriteLine($"Account {id} Found ");
+                    LookAtCustomerDetails(c);
+                    MatchFound = true;
+                }
             }
-        }
+        } while (!MatchFound);
     }
 
     private static void SearchBySurname()
     {
-        Console.Clear();
-        Console.Write("Please enter customer full name: "); // this can return more than one /\
-        string? fullName = Console.ReadLine();
-
-        foreach (Customer c in Customers)
+        bool MatchFound = false;
+        do
         {
-            string CustomerName = $"{c.FirstName} {c.Surname}".ToLower();
 
-            if (CustomerName == fullName.ToLower())
+
+            Console.Clear();
+            Console.Write("Please enter customer full name: "); // this can return more than one /\
+            string? fullName = Console.ReadLine();
+
+            foreach (Customer c in Customers)
             {
-                LookAtCustomerDetails(c);
+                string CustomerName = $"{c.FirstName} {c.Surname}".ToLower();
+
+                if (CustomerName == fullName.ToLower())
+                {
+                    LookAtCustomerDetails(c);
+                    MatchFound=true;
+                }
             }
-        }
+        } while (!MatchFound);
     }
 
     //Before calling we sould add some security stuff to make sure the customer has proven their identity 
