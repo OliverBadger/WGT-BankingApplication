@@ -2,6 +2,7 @@
 
 class PersonalAccount : Account
 {
+
     private List<DirectDebit> _directDebit;
     private List<StandingOrder> _standingOrder;
     private bool _isActive;
@@ -35,7 +36,6 @@ class PersonalAccount : Account
     //        _standingOrder.Add(newStandingOrder);
     //    }
     //    public void RemoveStandingOrder(string reference) { 
-
     //        for (int i = 0; i < _standingOrder.Count; i++) //loop through each standing orders in the list
     //        {
     //           if (_standingOrder[i].Reference == reference) //check the current stnading order referece matches the given reference
