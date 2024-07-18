@@ -15,7 +15,10 @@ class MyClass{
         UserCredentials.initUserCredentials();
         //Console.WriteLine("This is a Banking Application!");
         //Console.WriteLine("This is just to test the branches");
-        
+
+        //changing to use serialized accounts 
+        Customer testcustomer = Customers[0];
+
         Customer c1 = new Customer(1, "Bob","Beltch" , "test1234");
         Customer c2 = new Customer(1, "Bob","Dylan" , "test2234");
         Customer c3 = new Customer(1, "Bob","Marley" , "test3234");
