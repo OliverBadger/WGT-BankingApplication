@@ -5,15 +5,11 @@ This project is a group assignment for developing a C# application for Acme Bank
 
 **The types of accounts included are:**
 
-Personal Account
-ISA Account
-Business Account
-Project Details
-Personal Account
+Personal Account, (different instances of) Business Account & ISA Account 
 
 **Team Members:**
 
-Oliver Badger, Niomi Adesiyan, Ameer Ahmed, Samuel Wright, Krishaad Manirajah
+Oliver Badger, Niomi Adesiyan, Ameer Ahmed, Samuel Wright & Krishaad Manirajah
 
 **Completion Date:**
 
