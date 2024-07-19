@@ -1,4 +1,6 @@
-﻿namespace WGT_BankingApplication;
+﻿using Newtonsoft.Json;
+
+namespace WGT_BankingApplication;
 
 class Customer
 {
@@ -16,7 +18,9 @@ class Customer
     // Getters and setters for access to the variables
     public int ID { get => _id; }
     public string CustomerNumber { get => _customerNumber; set => _customerNumber = value; }
+    [JsonProperty("FirstName")]
     public string FirstName { get => _firstName; }
+    [JsonProperty("SecondName")]
     public string Surname { get => _surname; }
     public string Password { get => _password; set => _password = value; } //Changed to public so its serialized - will encrypt
     public ISA? Isa { get => _isa; }

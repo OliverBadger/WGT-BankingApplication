@@ -24,20 +24,20 @@ namespace WGT_BankingApplication
             else
             {
                 UserCredentials.employeeCredentials.Add(
-                    Encryption.encryptString("admin"),
-                    Encryption.encryptString("password"));
+                    Encryption.EncryptString("admin"),
+                    Encryption.EncryptString("password"));
                 UserCredentials.employeeCredentials.Add(
-                    Encryption.encryptString("Ameer"),
-                    Encryption.encryptString("abc"));
+                    Encryption.EncryptString("Ameer"),
+                    Encryption.EncryptString("abc"));
                 UserCredentials.employeeCredentials.Add(
-                    Encryption.encryptString("Naomi"),
-                    Encryption.encryptString("123"));
+                    Encryption.EncryptString("Naomi"),
+                    Encryption.EncryptString("123"));
                 UserCredentials.employeeCredentials.Add(
-                    Encryption.encryptString("Oliver"),
-                    Encryption.encryptString("qwerty"));
+                    Encryption.EncryptString("Oliver"),
+                    Encryption.EncryptString("qwerty"));
                 UserCredentials.employeeCredentials.Add(
-                    Encryption.encryptString("Sam"),
-                    Encryption.encryptString("password"));
+                    Encryption.EncryptString("Sam"),
+                    Encryption.EncryptString("password"));
 
                 //We serialize the encrypted version of all our details 
                 string json = JsonConvert.SerializeObject(employeeCredentials, Formatting.Indented);
