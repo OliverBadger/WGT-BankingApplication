@@ -2,6 +2,7 @@
 
 class PersonalAccount : Account
 {
+
     private List<DirectDebit> _directDebit;
     private List<StandingOrder> _standingOrder;
     private bool _isActive;
