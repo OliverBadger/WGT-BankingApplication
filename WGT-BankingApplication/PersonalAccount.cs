@@ -15,6 +15,7 @@ class PersonalAccount : Account
         this.InitialDeposit = initialDeposit;
         this.Customer = customer; 
         _isActive = false;
+        Customer.AddAccount(this);
     }
 
         public decimal InitialDeposit { get; }

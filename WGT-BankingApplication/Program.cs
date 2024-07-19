@@ -59,24 +59,21 @@ class MyClass{
         //Console.WriteLine("\nThese accounts are associated to Customer 1:");
         //foreach (var test in c1.Accounts)
         //{
-        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance:C}");
         //}
 
         //Console.WriteLine("\nThese accounts are associated to Customer 2:");
         //foreach (var test in c2.Accounts)
         //{
-        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance:C}");
         //}
 
         //Console.WriteLine("\nThese accounts are associated to Customer 3:");
         //foreach (var test in c3.Accounts)
         //{
-        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance:C}");
         //}
 
-        //login();
-        //InputLoop();
-                          
         // Writes the array of customers to the Login Script
         ls.Customers = Customers;
         ls.login();

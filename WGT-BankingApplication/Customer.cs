@@ -17,10 +17,10 @@ class Customer
     public string FirstName { get => _firstName; }
     public string Surname { get => _surname; }
     public string Password { get => _password; set => _password = value; } //Changed to public so its serialized - will encrypt
-    internal ISA? Isa { get => _isa; }
-    internal List<Account> Accounts { get => _accounts; }
-    internal List<PersonalAccount>? PersonalAccountList { get => _personalAccounts; }
-    internal List<BusinessAccount>? BusinessAccountList { get => _businessAccounts; }
+    public ISA? Isa { get => _isa; }
+    public List<Account> Accounts { get => _accounts; }
+    public List<PersonalAccount>? PersonalAccountList { get => _personalAccounts; }
+    public List<BusinessAccount>? BusinessAccountList { get => _businessAccounts; }
 
     // Could impliment overides for each customer so it takes in the account
     public Customer(int id, string firstname, string surname , string password, string customerNumber)  // Initial testing need to improve 
