@@ -4,6 +4,27 @@ namespace WGT_BankingApplication
 {
     public class HelpSystem
     {
+        //displays the list of available help options
+        public void ShowHelpOptions()
+        {
+            Console.WriteLine("Help Options:");
+            Console.WriteLine("1. CreateAccount");
+            Console.WriteLine("2. CreateDirectDebit");
+            Console.WriteLine("3. CreateStandingOrder");
+            Console.WriteLine("4. RemoveDirectDebit");
+            Console.WriteLine("5. RemoveStandingOrder");
+            Console.WriteLine("6. Deposit");
+            Console.WriteLine("7. Withdraw");
+            Console.WriteLine("8. CreateBusinessAccount");
+            Console.WriteLine("9. ManageISA");
+            Console.WriteLine("10. IssueChequeBook");
+            Console.WriteLine("11. GenerateCustomer");
+            Console.WriteLine("12. ManageLoan");
+            Console.WriteLine("13. ManageUserCredentials");
+            Console.WriteLine("Type the name of the option for more details.");
+
+        }
+        //displays help information based on the context
         public void ShowHelp(string context)
         {
             Console.WriteLine("Help: Select an operation to get help.");
