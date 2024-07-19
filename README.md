@@ -11,7 +11,7 @@ Business Account
 Project Details
 Personal Account
 
-**Team Members: **
+**Team Members:**
 
 Oliver Badger, Niomi Adesiyan, Ameer Ahmed, Samuel Wright, Krishaad Manirajah
 
