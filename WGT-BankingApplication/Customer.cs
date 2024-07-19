@@ -12,18 +12,15 @@ class Customer
     private List<BusinessAccount>? _businessAccounts;
     private List<Account> _accounts;
 
-    public int ID { get { return _id; } }
-    public string FirstName { get { return _firstName; } }
-    public string Surname { get { return _surname; } }
-    public string Password { get { return _password; } set { _password = value; } } //Changed to public so its serialized - will encrypt
-    public ISA? Isa { get { return isa; } }
-    public List<Account> Account_List { get { return _accounts; } }
-    public List<PersonalAccount> PersonalAccount_List { get { return _personalAccounts; } }
-    public List<BusinessAccount> BusinessAccount_List { get { return _businessAccounts; } }
-
+    public int ID { get => _id; }
     public string CustomerNumber { get => _customerNumber; set => _customerNumber = value; }
-
-
+    public string FirstName { get => _firstName; }
+    public string Surname { get => _surname; }
+    public string Password { get => _password; set => _password = value; } //Changed to public so its serialized - will encrypt
+    internal ISA? Isa { get => _isa; }
+    internal List<Account> Accounts { get => _accounts; }
+    internal List<PersonalAccount>? PersonalAccountList { get => _personalAccounts; }
+    internal List<BusinessAccount>? BusinessAccountList { get => _businessAccounts; }
 
     // Could impliment overides for each customer so it takes in the account
     public Customer(int id, string firstname, string surname , string password, string customerNumber)  // Initial testing need to improve 

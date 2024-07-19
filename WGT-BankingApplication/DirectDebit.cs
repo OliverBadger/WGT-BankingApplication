@@ -7,8 +7,7 @@ class DirectDebit : PersonalAccount
 	private DateTime _date;
 	private string _reference;
 
-
-	public DirectDebit(Customer Customer, int InitialDeposit, string Payee, decimal Amount, DateTime Date, string Reference) : base(Customer, InitialDeposit)
+	public DirectDebit(Customer Customer, decimal InitialDeposit, string Payee, decimal Amount, DateTime Date, string Reference) : base(Customer, InitialDeposit)
 	{
 		_payee = Payee;
 		_amount = Amount;

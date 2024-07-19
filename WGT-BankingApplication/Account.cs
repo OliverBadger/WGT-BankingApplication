@@ -8,7 +8,7 @@ abstract class Account : Customer
     public string AccountNumber { get => _accountNumber; }
     public virtual decimal Balance { get => _balance; protected set => _balance = value; }
 
-    public Account(int ID, string FirstName, string Surname, string Password) : base(ID, FirstName, Surname, Password)
+    public Account(int ID, string FirstName, string Surname, string Password, string CustomerNumber) : base(ID, FirstName, Surname, Password, CustomerNumber)
     {
         _accountNumber = GenerateRandomAccountNumber();
     }
