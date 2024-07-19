@@ -15,9 +15,9 @@ class PersonalAccount : Account
         _standingOrder = new List<StandingOrder>(); // stores standing orders linked to a personal account
         Balance = initialDeposit;
         this.InitialDeposit = initialDeposit;
-        this.Customer = customer; 
+        this.Customer = customer;
         _isActive = false;//acc starts as inactive
-        Customer.AddAccount(this);//adds acc to list of accs
+        // Customer.AddAccount(this);//adds acc to list of accs
     }
 
     //property for the initial deposit

@@ -11,10 +11,10 @@ namespace WGT_BankingApplication
     internal class LoginScript
     {
 
-        private Customer[] _customers;
+        private Customer[]? _customers;
         private static string userDetails = "Users.JSON";
 
-        public Customer[] Customers { get => _customers; set => _customers = value; }
+        public Customer[]? Customers { get => _customers; set => _customers = value; }
 
 
         //do while for login if credentials are valid escape do while call next method outside of do while block
@@ -65,7 +65,7 @@ namespace WGT_BankingApplication
         }
 
         //checks if username is valid
-        public bool isUserNameValid(string username)
+        public bool isUserNameValid(string username = "SpongeBob")
         {
             if (UserCredentials.employeeCredentials.ContainsKey(Encryption.EncryptString(username)))
             {
@@ -109,9 +109,9 @@ namespace WGT_BankingApplication
                         // Gathers first and last name to search by
                         Console.Clear();
                         Console.Write("Please enter the customer's first name: ");
-                        string firstName = Console.ReadLine();
+                        string? firstName = Console.ReadLine();
                         Console.Write("Please enter the customer's surname: ");
-                        string surname = Console.ReadLine();
+                        string? surname = Console.ReadLine();
 
                         var potentialCustomers = SearchCustomersByName(firstName, surname);
                         foreach ( var customer in potentialCustomers)
@@ -136,9 +136,9 @@ namespace WGT_BankingApplication
             // Gathers first and last name to search by
             Console.Clear();
             Console.Write("Please enter the customer's first name: ");
-            string firstName = Console.ReadLine();
+            string? firstName = Console.ReadLine();
             Console.Write("Please enter the customer's surname: ");
-            string surname = Console.ReadLine();
+            string? surname = Console.ReadLine();
 
             var potentialCustomers = SearchCustomersByName(firstName, surname);
 
@@ -161,7 +161,7 @@ namespace WGT_BankingApplication
             Dictionary<int, char> userInputDigits = new Dictionary<int, char>();
             foreach (int pos in positions)
             {
-                Console.Write($"Please enter the digit at position {pos + 1}: ");
+                Console.Write($"Please enter the character at position {pos + 1}: ");
                 char userDigit = Console.ReadKey().KeyChar;
                 Console.WriteLine();
                 userInputDigits[pos] = userDigit;
@@ -237,15 +237,12 @@ namespace WGT_BankingApplication
                         """);
                 }
             }
-            if (customer.BusinessAccountList != null)
+            if (customer.BusinessAccount != null)
             {
-                foreach (var account in customer.BusinessAccountList)
-                {
-                    Console.WriteLine($"""
-                        Business - Account Number  : {account.AccountNumber}
-                        Business - Balance         : {account.Balance}
-                        """);
-                }
+                Console.WriteLine($"""
+                    Business - Account Number  : {customer.BusinessAccount.AccountNumber}
+                    Business - Balance         : {customer.BusinessAccount.Balance}
+                    """);
             }
             if (customer.Isa != null)
             {
