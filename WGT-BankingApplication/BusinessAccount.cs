@@ -12,22 +12,14 @@ class BusinessAccount : Account
     private decimal _overdraftAmount = 0m;
     private DateTime _createdDate;
     private DateTime _lastAnnualChargeDate = default;
-    private List<Loan> _loans;
-    private Customer _accountHolder;
-    private List<Cheque> _chequeBook;  
+    private List<Loan> _loans; // List of loans associated with the account
+    private Customer _accountHolder; // Stores the account holder information
+    private List<Cheque> _chequeBook;  // List of cheques issued
 
-    public string NameOfBusiness { get => _nameOfBusiness; set => _nameOfBusiness = value; }
-    public string BusinessAddress { get => _businessAddress; set => _businessAddress = value; }
-    public string TypeOfBusiness { get => _typeOfBusiness; set => _typeOfBusiness = value; }
-    public bool IsActive { get => _isActive; private set => _isActive = value; }
-    public bool HasRequestedChequeBook { get => _hasRequestedChequeBook; private set => _hasRequestedChequeBook = value; }
-    // public decimal OverdraftAmount { get => _overdraftAmount; set => _overdraftAmount = value; }
-    public DateTime CreatedDate { get => _createdDate; }
+    // Properties to access and modify last annual charge date variable
     public DateTime LastAnnualChargeDate { get => _lastAnnualChargeDate; private set => _lastAnnualChargeDate = value; }
-    public List<Loan> Loans { get => _loans; }
-    internal Customer AccountHolder { get => _accountHolder; }
-    internal List<Cheque> ChequeBook { get => _chequeBook; }
 
+    // Constructor to initialise a business account
     public BusinessAccount(Customer Customer, string NameOfBusiness, string TypeOfBusiness, string BusinessAddress, decimal InitialDeposit, decimal OverdraftAmount, bool HasRequestedChequeBook, DateTime CreatedDate = default, DateTime LastAnnualChargeDate = default) : base(Customer.ID, Customer.FirstName, Customer.Surname, Customer.Password, Customer.CustomerNumber)
     {
         _accountHolder = Customer;
@@ -42,19 +34,22 @@ class BusinessAccount : Account
         _loans = [];
         _chequeBook = [];
         _hasRequestedChequeBook = HasRequestedChequeBook;
-        Customer.AddAccount(this);
+        Customer.AddAccount(this); // Add this account to the customer's list of accounts
     }
 
+    // Activates account
     public override void OpenAccount()
     {
         _isActive = true;
     }
 
+    // Deactivates account
     public override void CloseAccount()
     {
         _isActive = false;
     }
 
+    // Deposit money into the account
     public override void Deposit(decimal amount)
     {
         if (_isActive)
@@ -70,18 +65,23 @@ class BusinessAccount : Account
         }
     }
 
+    // Withdraw money from the account
     public override void Withdraw(decimal amount)
     {
+        // If the account is not active then the code is unable to run
         if (_isActive)
         {
+            // If the amount is negative or 0 then a new argument is thrown
             if (amount <= 0)
             {
                 throw new ArgumentException("Withdraw must be a positive, non-zero number");
             }
+            // Checks for available funds and overdraft amount then throws an argument if exceeded
             else if (Balance + _overdraftAmount < amount)
             {
                 throw new InvalidOperationException("Insufficient funds or overdraft limit exceeded.");
             }
+            // If the checks have passed the validation for your bank balance and overdraft is calculated based on the withdrawal amount
             else
             {
                 if (Balance == 0)
@@ -99,13 +99,14 @@ class BusinessAccount : Account
             }  
         }     
     }
+
+    // Request a new cheque book
     public void RequestNewChequeBook() 
     {
         if (!_hasRequestedChequeBook)
         {
             _hasRequestedChequeBook = true;
         }
-
         else
         {
             throw new InvalidOperationException("Cheque book already requested.");
@@ -117,43 +118,47 @@ class BusinessAccount : Account
         Cheque cheque = new(payeeName, amountWrittenInWords, amount, signature, createdDate);
         _chequeBook.Add(cheque);
     }
-    public DateTime AnnualCharge(DateTime lastDate)  // Updated this to return new LastAnnualChargeDate, pass in a date when reading from file to use in the check otherwise todays date is used.
-    {
-        //if (!_isActive) Perhaps not required will reinstate later if needed
-        //    return DateTime.UnixEpoch;
 
+    // Calculate the annual charge and update the last annual charge date
+    public DateTime AnnualCharge(DateTime lastDate)  // Method to calculate and deduct the annual charge, and update the last annual charge date.
+    {
+        // DateTime object to store the current date and time
         DateTime today = DateTime.Now;
 
+        // Check if the account creation date is today
         if (_createdDate.Date == today.Date)
         {
+            // If balance is sufficient, deduct the annual charge and return today's date
             if (Balance >= 120)
             {
                 Balance -= 120;
                 return today;
             }
-
             else
             {
+                // If balance is insufficient, throw an exception
                 throw new InvalidOperationException("Insufficient balance for annual charge.");
             }
         }
-
-        else if (today.Date == lastDate.AddYears(1).Date)  // Updated to check today is exactly a year later since last charge, before was a year or more
+        // Check if today is exactly one year after the last annual charge date
+        else if (today.Date == lastDate.AddYears(1).Date)
         {
+            // If balance is sufficient, deduct the annual charge, update the last annual charge date, and return today's date
             if (Balance >= 120)
             {
                 Balance -= 120;
                 _lastAnnualChargeDate = today;
                 return today;
             }
-
             else
             {
+                // If balance is insufficient, throw an exception
                 throw new InvalidOperationException("Insufficient balance for annual charge.");
             }
         }
         else
         {
+            // If the account creation date is not today and it is not exactly one year since the last charge, return the last charge date
             return lastDate;
         }
     }

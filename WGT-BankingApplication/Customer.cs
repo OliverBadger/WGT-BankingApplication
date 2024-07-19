@@ -2,6 +2,7 @@
 
 class Customer
 {
+    // private detail to store the customer details
     private int _id;
     private string _customerNumber;
     private string _firstName;
@@ -12,6 +13,7 @@ class Customer
     private List<BusinessAccount>? _businessAccounts;
     private List<Account> _accounts;
 
+    // Getters and setters for access to the variables
     public int ID { get => _id; }
     public string CustomerNumber { get => _customerNumber; set => _customerNumber = value; }
     public string FirstName { get => _firstName; }
@@ -23,19 +25,21 @@ class Customer
     public List<BusinessAccount>? BusinessAccountList { get => _businessAccounts; }
 
     // Could impliment overides for each customer so it takes in the account
+    // Constructor to initialize a new Customer object
     public Customer(int id, string firstname, string surname , string password, string customerNumber)  // Initial testing need to improve 
     {
         _id = id;
         _firstName = firstname;
         _surname = surname;
         _password = password;
-        _accounts = new List<Account>();
+        _accounts = new List<Account>(); // Initializes the account list
         _customerNumber = customerNumber;
 
     }
 
+    // Method to add an account to the customers list of account
     public void AddAccount(Account account)
     {
-        _accounts.Add(account);
+        _accounts.Add(account); 
     }
 }

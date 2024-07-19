@@ -6,38 +6,48 @@ using System.Threading.Tasks;
 
 namespace WGT_BankingApplication
 {
-
-    //use these methods to encrypt all sensitve data (employee credentials and customer details e.t.c.)
+    // Provides methods for encrypting and decrypting sensitive data such as employee credentials and customer details.
     internal class Encryption
     {
-        //Returns ascii values as string 
-        public static string encryptString(string s)
+        // Encrypts a string by converting each character to its ASCII value and joining them with an asterisk separator.
+        public static string EncryptString(string s)
         {
-            //List<uint> CharValuesACSII = new List<uint>();
-            List<string> ACSIIasSting = new List<string>();
-            //gets ascii code of each character
+            // List to store the ASCII values of characters as strings.
+            List<string> asciiAsString = new List<string>();
+
+            // Iterate through each character in the input string.
             foreach (char c in s)
             {
-                ACSIIasSting.Add(((uint)c).ToString());
-                
+                // Convert the character to its ASCII value (uint) and add it to the list as a string.
+                asciiAsString.Add(((uint)c).ToString());
             }
-            string a = string.Join("*", ACSIIasSting);
-            return a;
+
+            // Join the list of ASCII values into a single string, with each value separated by an asterisk '*'.
+            string encryptedString = string.Join("*", asciiAsString);
+
+            // Return the encrypted string.
+            return encryptedString;
         }
 
-        //decodeds encryped string
-        public static string Decode(string EncryptedPasswordAsString)
+        // Decodes an encrypted string by converting ASCII values back to characters.
+        public static string Decode(string encryptedStringAsString)
         {
+            // Initialize an empty string to build the decoded output.
             string decodedString = "";
-            string[] split = EncryptedPasswordAsString.Split("*", StringSplitOptions.RemoveEmptyEntries); //remove empty needed 
-            foreach (string c in split)
+
+            // Split the input encrypted string by the asterisk '*' separator into an array of ASCII value strings.
+            string[] split = encryptedStringAsString.Split("*", StringSplitOptions.RemoveEmptyEntries);
+
+            // Iterate through each ASCII value string in the array.
+            foreach (string asciiValue in split)
             {
-                decodedString += (char)UInt32.Parse(c);
+                // Parse the ASCII value string to a UInt32 (unsigned integer).
+                // Convert the UInt32 value to its corresponding character and append it to the decoded string.
+                decodedString += (char)UInt32.Parse(asciiValue);
             }
+
+            // Return the fully decoded string.
             return decodedString;
         }
-
-
-
     }
 }
