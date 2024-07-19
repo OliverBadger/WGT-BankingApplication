@@ -13,15 +13,7 @@ Personal Account
 
 Team Members: 
 
-Oliver Badger
-
-Niomi Adesiyan
-
-Ameer Ahmed
-
-Samuel Green
-
-Krishaad Manirajah
+Oliver Badger, Niomi Adesiyan, Ameer Ahmed, Samuel Green, Krishaad Manirajah
 
 Completion Date:
 
