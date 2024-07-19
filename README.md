@@ -1,5 +1,5 @@
 # WGT-BankingApplication
-Overview
+Overview:
 This project is a group assignment for developing a C# application for Acme Bank. The application allows tellers to access and manage customer accounts. 
 
 The types of accounts included are:
