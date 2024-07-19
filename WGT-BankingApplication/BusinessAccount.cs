@@ -4,9 +4,9 @@ namespace WGT_BankingApplication;
 
 class BusinessAccount : Account
 {
-    private string _typeOfBusiness;
-    private string _nameOfBusiness;
-    private string _businessAddress;
+    private string? _typeOfBusiness;
+    private string? _nameOfBusiness;
+    private string? _businessAddress;
     private bool _isActive;
     private bool _hasRequestedChequeBook;
     private decimal _overdraftAmount = 0m;
@@ -34,7 +34,8 @@ class BusinessAccount : Account
         _loans = [];
         _chequeBook = [];
         _hasRequestedChequeBook = HasRequestedChequeBook;
-        Customer.AddAccount(this); // Add this account to the customer's list of accounts
+        Customer.BusinessAccount = this;
+        //Customer.AddAccount(this); // Add this account to the customer's list of accounts
     }
 
     // Activates account

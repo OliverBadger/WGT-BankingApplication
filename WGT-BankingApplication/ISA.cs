@@ -9,7 +9,7 @@ class ISA : Account
     private DateTime _createdDate;//date and time when the account was created
     private bool _isActive;//indicates if the account is still active or closed
     private int _monthMaturity;//Tracks the number of months the account has matured
-    private int _yearMaturity;//tracks the number of years the account has matured
+    // private int _yearMaturity; tracks the number of years the account has matured, will be implemented
     private List<decimal> _receipts = new List<decimal>();//a list to keep track of account balance over time
 
     //Takes a customer object and an initial deposit amount

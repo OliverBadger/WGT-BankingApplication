@@ -4,6 +4,7 @@ using Newtonsoft.Json.Bson;
 using System;
 using System.Formats.Tar;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace WGT_BankingApplication;
@@ -56,6 +57,7 @@ class MyClass{
         //Console.WriteLine($"{c1.FirstName} has a balance of: {s1.Balance:C} in their ISA account.");
         //Console.WriteLine($"{c2.FirstName} has a balance of: {s2.Balance:C} in their ISA account.");
 
+        // Console.WriteLine($"This is the business account for {c1.FirstName}: {c1.BusinessAccount}");
         //Console.WriteLine("\nThese accounts are associated to Customer 1:");
         //foreach (var test in c1.Accounts)
         //{
@@ -75,12 +77,12 @@ class MyClass{
         //}
 
         // Writes the array of customers to the Login Script
-        //ls.Customers = Customers;
-        //ls.login();
-        //ls.InputLoop();
+        ls.Customers = Customers;
+        ls.login();
+        ls.InputLoop();
     }
 
-    static Customer[] Customers;
+    static Customer[]? Customers;
     //this can be moved elsewhere
     private static void initUsers()
     {

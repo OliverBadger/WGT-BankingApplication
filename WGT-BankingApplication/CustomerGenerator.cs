@@ -42,9 +42,9 @@ namespace WGT_BankingApplication
         private string[] _secondNames = { "Smith", "Winters", "Stokes", "Singh", "Sen", "Wu", "Hope", "Kane", "Waltz" };
         
         // Optional account-related fields
-        private string? _ISANumber;
-        private string[]? _personalAccountNumbers;
-        private string[]? _businessAccountNumbers;
+        //private string? _ISANumber;
+        //private string[]? _personalAccountNumbers;
+        //private string[]? _businessAccountNumbers;
 
         // Constructor to ensure functionality
         public CustomerGenerator() { }
