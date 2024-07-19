@@ -21,4 +21,4 @@ Access help documentation through the integrated help menu within the applicatio
 
 **Potential Fixes:**
 
-If the User data isnt loading properly into the system. Navigate to the /bin/Debug/net8.0/ folder and delete the Users.json file
+If the User data isnt loading properly into the system. Navigate to the /bin/Debug/net8.0/ folder and delete the Users.json file, then re-run the application.
