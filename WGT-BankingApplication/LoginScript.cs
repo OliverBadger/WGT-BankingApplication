@@ -67,7 +67,7 @@ namespace WGT_BankingApplication
         //checks if username is valid
         public bool isUserNameValid(string username)
         {
-            if (UserCredentials.employeeCredentials.ContainsKey(Encryption.encryptString(username)))
+            if (UserCredentials.employeeCredentials.ContainsKey(Encryption.EncryptString(username)))
             {
                 return true;
             }
@@ -77,7 +77,7 @@ namespace WGT_BankingApplication
         //Script for encoding run after password checks
         public bool isPasswordValid(string username, string password)
         {
-            if (Encryption.Decode(UserCredentials.employeeCredentials[Encryption.encryptString(username)]) == password)
+            if (Encryption.Decode(UserCredentials.employeeCredentials[Encryption.EncryptString(username)]) == password)
             {
                 return true;
             }

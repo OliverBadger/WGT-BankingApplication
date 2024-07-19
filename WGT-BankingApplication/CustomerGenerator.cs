@@ -46,6 +46,9 @@ namespace WGT_BankingApplication
         private string[]? _personalAccountNumbers;
         private string[]? _businessAccountNumbers;
 
+        // Constructor to ensure functionality
+        public CustomerGenerator() { }
+
         // Generates new user data and returns an array of Customer objects
         public Customer[] GenerateNewUserData()
         {
@@ -64,7 +67,7 @@ namespace WGT_BankingApplication
             // Serializes the userList array to JSON and writes it to a file called Users.json
             string json = JsonConvert.SerializeObject(_userList, Formatting.Indented);
             File.WriteAllText("Users.json", json);
-            Console.WriteLine("users prented");
+            Console.WriteLine("users printed");
 
             return _userList;
         }
