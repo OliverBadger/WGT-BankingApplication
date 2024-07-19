@@ -12,7 +12,7 @@ class ISA : Account
     private int _yearMaturity;
     private List<decimal> _receipts = new List<decimal>();
 
-    public ISA(Customer Customer, int InitialDeposit) : base(Customer.ID, Customer.FirstName, Customer.Surname, Customer.Password)
+    public ISA(Customer Customer, int InitialDeposit) : base(Customer.ID, Customer.FirstName, Customer.Surname, Customer.Password, Customer.CustomerNumber)
     {
         _accountHolder = Customer;
         _accountNumber = GenerateAccountNumber();

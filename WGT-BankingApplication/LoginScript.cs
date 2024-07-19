@@ -223,9 +223,9 @@ namespace WGT_BankingApplication
             Console.WriteLine(new string('-', 50));
             Console.WriteLine("Accounts:");
             Console.WriteLine(new string('-', 50));
-            if (customer.PersonalAccount_List != null)
+            if (customer.PersonalAccountList != null)
             {
-                foreach (var account in customer.PersonalAccount_List)
+                foreach (var account in customer.PersonalAccountList)
                 {
                     Console.WriteLine($"""
                         Personal Account - Account Number  : {account.AccountNumber}
@@ -233,9 +233,9 @@ namespace WGT_BankingApplication
                         """);
                 }
             }
-            if (customer.BusinessAccount_List != null)
+            if (customer.BusinessAccountList != null)
             {
-                foreach (var account in customer.BusinessAccount_List)
+                foreach (var account in customer.BusinessAccountList)
                 {
                     Console.WriteLine($"""
                         Business - Account Number  : {account.AccountNumber}

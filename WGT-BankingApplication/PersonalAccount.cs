@@ -7,7 +7,7 @@ class PersonalAccount : Account
     private List<StandingOrder> _standingOrder;
     private bool _isActive;
     public PersonalAccount(Customer customer, decimal initialDeposit)
-            : base(customer.ID, customer.FirstName, customer.Surname, customer.Password)
+            : base(customer.ID, customer.FirstName, customer.Surname, customer.Password, customer.CustomerNumber)
     {
         _directDebit = new List<DirectDebit>(); // stores direct debits linked to a personal account
         _standingOrder = new List<StandingOrder>(); // stores standing orders linked to a personal account
@@ -15,6 +15,7 @@ class PersonalAccount : Account
         this.InitialDeposit = initialDeposit;
         this.Customer = customer; 
         _isActive = false;
+        Customer.AddAccount(this);
     }
 
         public decimal InitialDeposit { get; }
@@ -22,7 +23,7 @@ class PersonalAccount : Account
 
     public void CreateDirectDebit(string payee, decimal amount, DateTime date, string reference)
         {
-            DirectDebit newDirectDebit = new DirectDebit(Customer, (int)InitialDeposit, payee, amount, date, reference);
+            DirectDebit newDirectDebit = new DirectDebit(Customer, InitialDeposit, payee, amount, date, reference);
             _directDebit.Add(newDirectDebit); //add a new direct debit to the list
         }
         public void RemoveDirectDebit(string reference)
@@ -38,7 +39,7 @@ class PersonalAccount : Account
         }
     public void CreateStandingOrder(string payee, decimal amount, DateTime date, string reference)
     {
-        StandingOrder newStandingOrder = new StandingOrder(Customer, (int)InitialDeposit, payee, amount, date, reference);
+        StandingOrder newStandingOrder = new StandingOrder(Customer, InitialDeposit, payee, amount, date, reference);
         _standingOrder.Add(newStandingOrder); // add a new standing order to the list
     }
 

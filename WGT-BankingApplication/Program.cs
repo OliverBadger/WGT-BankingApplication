@@ -24,13 +24,6 @@ class MyClass{
         Customer c4 = Customers[3];
 
         Console.WriteLine(Customers[1].FirstName);
-
-        ISA savAcc1 = new ISA(c1, 1);
-        c1.AddAccount(savAcc1);
-
-        ISA savAcc2 = new ISA(c1, 1);
-        ISA savAcc3 = new ISA(c1, 1);
-        ISA savAcc4 = new ISA(c1, 1);
       
         ISA s1 = new(c1, 500);
         ISA s2 = new(c2, 7750);
@@ -40,9 +33,9 @@ class MyClass{
         PersonalAccount p2 = new(c2, 900);
 
         // Will need to make sure initial deposit entered is greater than 120, as the annual fee will instantly deduct if the business account is new/being created today.
-        BusinessAccount b1 = new(c1, "OpenAI", "NonProfit", "3180 18th St. San Francisco, California 94110", 140);  
-        BusinessAccount b2 = new(c2, "Meta", "ForProfit", "1 Meta Way Menlo Park California 94025", 10000);
-        BusinessAccount b3 = new(c3, "HP", "ForProfit", "70 St Mary Axe London EC3A 8BE", 35350, DateTime.Parse("18/07/2021"), DateTime.Parse("18/07/2024"));  // Test for reading in a file
+        BusinessAccount b1 = new(c1, "OpenAI", "NonProfit", "3180 18th St. San Francisco, California 94110", 140, 1000, false);  
+        BusinessAccount b2 = new(c2, "Meta", "ForProfit", "1 Meta Way Menlo Park California 94025", 10000, 0, true);
+        BusinessAccount b3 = new(c3, "HP", "ForProfit", "70 St Mary Axe London EC3A 8BE", 35350, 600, false, DateTime.Parse("18/07/2021"), DateTime.Parse("18/07/2024"));  // Test for reading in a file
 
         // This can be removed, just testing to see if the accounts are working
         Console.WriteLine($"""
@@ -66,24 +59,21 @@ class MyClass{
         //Console.WriteLine("\nThese accounts are associated to Customer 1:");
         //foreach (var test in c1.Accounts)
         //{
-        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance:C}");
         //}
 
         //Console.WriteLine("\nThese accounts are associated to Customer 2:");
         //foreach (var test in c2.Accounts)
         //{
-        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance:C}");
         //}
 
         //Console.WriteLine("\nThese accounts are associated to Customer 3:");
         //foreach (var test in c3.Accounts)
         //{
-        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance}");
+        //    Console.WriteLine($"Account: {test}, Balance: {test.Balance:C}");
         //}
 
-        //login();
-        //InputLoop();
-                          
         // Writes the array of customers to the Login Script
         ls.Customers = Customers;
         ls.login();
