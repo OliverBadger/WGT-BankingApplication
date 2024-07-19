@@ -10,10 +10,12 @@ namespace WGT_BankingApplication
     class UserCredentials
     {
         //Temp will store in JSON
+        //static dict to store employee creds
         public static Dictionary<string, string> employeeCredentials = new Dictionary<string, string>();
+        //method to nitialise user creds from JSON file
         public static void initUserCredentials()
         {
-
+            //checks if the employee creds exists
             if (File.Exists("employeeCredentials.json"))
             {
                 string json = File.ReadAllText("employeeCredentials.json");

@@ -3,9 +3,11 @@
 class PersonalAccount : Account
 {
 
-    private List<DirectDebit> _directDebit;
-    private List<StandingOrder> _standingOrder;
-    private bool _isActive;
+    private List<DirectDebit> _directDebit;//Stores direct debit linked to a personal acc
+    private List<StandingOrder> _standingOrder;//Stores standing orders linked to personal acc
+    private bool _isActive;//Acc is active or not
+
+    //constructor for personal acc
     public PersonalAccount(Customer customer, decimal initialDeposit)
             : base(customer.ID, customer.FirstName, customer.Surname, customer.Password, customer.CustomerNumber)
     {
@@ -14,18 +16,23 @@ class PersonalAccount : Account
         Balance = initialDeposit;
         this.InitialDeposit = initialDeposit;
         this.Customer = customer; 
-        _isActive = false;
-        Customer.AddAccount(this);
+        _isActive = false;//acc starts as inactive
+        Customer.AddAccount(this);//adds acc to list of accs
     }
 
+    //property for the initial deposit
         public decimal InitialDeposit { get; }
+        //property to get and set to the customer
         public Customer Customer { get; set; }
 
+    //method to create a new direct debit
     public void CreateDirectDebit(string payee, decimal amount, DateTime date, string reference)
         {
             DirectDebit newDirectDebit = new DirectDebit(Customer, InitialDeposit, payee, amount, date, reference);
             _directDebit.Add(newDirectDebit); //add a new direct debit to the list
         }
+
+    //method to remove a direct debit by referance
         public void RemoveDirectDebit(string reference)
         {
             for (int i = 0; i < _directDebit.Count; i++) //loop through each direct debit in the list
@@ -37,11 +44,15 @@ class PersonalAccount : Account
                 }
             }
         }
+
+        //Method to remove a direct debit by reference
     public void CreateStandingOrder(string payee, decimal amount, DateTime date, string reference)
     {
         StandingOrder newStandingOrder = new StandingOrder(Customer, InitialDeposit, payee, amount, date, reference);
         _standingOrder.Add(newStandingOrder); // add a new standing order to the list
     }
+
+    //method to remove a standing order
 
     public void RemoveStandingOrder(string reference) { 
 
@@ -55,16 +66,21 @@ class PersonalAccount : Account
             }
         }
 
+    //method to open acc
     public override void OpenAccount()
     {
         _isActive = true;
     }
+
+    //method to close acc
 
     public override void CloseAccount()
     {
         _isActive = false;
 
     }
+
+    //method to deposit an amount into the acc
 
     public override void Deposit(decimal amount)
     {
@@ -80,6 +96,8 @@ class PersonalAccount : Account
             Console.WriteLine($"{amount}  deposited successfully. Current Balance: {Balance}");
         }
     }
+
+    //method to withdraw an ammount from the acc
 
     public override void Withdraw(decimal amount)
     {

@@ -21,11 +21,13 @@ namespace WGT_BankingApplication
 
         //We can move login methods and customer searching methods to dedicated classes for clarity and to keep this class consice
         public void login()
+        //this is the main login method
         {
             string username = "";
 
             bool CorrectUsernameProvided = false;
 
+            //lopp until a username is provided
             do
             {
                 Console.Clear();
@@ -47,7 +49,7 @@ namespace WGT_BankingApplication
             } while (!CorrectUsernameProvided);
 
             // Gets password
-
+            //loops until correct passw is provided
             bool CorrectPasswordProvided = false;
 
             do
@@ -61,6 +63,8 @@ namespace WGT_BankingApplication
             } while (!CorrectPasswordProvided);
 
         }
+
+        //checks if username is valid
         public bool isUserNameValid(string username)
         {
             if (UserCredentials.employeeCredentials.ContainsKey(Encryption.encryptString(username)))
